@@ -1,0 +1,36 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "DataFactoryLearning001"
+		},
+		"LS_Blobstorage_connectionString": {
+			"value": ""
+		},
+		"LS_AzureDataLakeStorage_accountKey": {
+			"value": ""
+		},
+		"LS_SQLDatabase001_connectionString": {
+			"value": ""
+		},
+		"LS_AzureDataLakeStorage_properties_typeProperties_url": {
+			"value": "https://azlearningadls001.dfs.core.windows.net/"
+		},
+		"LS_HTTPConnection_properties_typeProperties_url": {
+			"value": "@{linkedService().baseURL}"
+		},
+		"LS_KeyVault001_properties_typeProperties_baseUrl": {
+			"value": "https://azureKVSurendra.vault.azure.net/"
+		},
+		"LS_SQLDB001_Keyvault_properties_typeProperties_connectionString_secretName": {
+			"value": "azuresqldb001-ConnectionString"
+		},
+		"LS_ADLSGen2_KeyVault_properties_typeProperties_url": {
+			"value": "https://azlearningadls001.dfs.core.windows.net/"
+		},
+		"LS_BlobStroage_Keyvault_properties_typeProperties_connectionString_secretName": {
+			"value": "azureBlob-ConnectionString"
+		}
+	}
+}
