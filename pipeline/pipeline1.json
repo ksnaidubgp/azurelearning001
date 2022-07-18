@@ -1,0 +1,22 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Wait for 10 mins",
+				"type": "Wait",
+				"dependsOn": [],
+				"userProperties": [
+					{
+						"name": "createdBy",
+						"value": "SurendraKothapalli"
+					}
+				],
+				"typeProperties": {
+					"waitTimeInSeconds": 10
+				}
+			}
+		],
+		"annotations": []
+	}
+}
