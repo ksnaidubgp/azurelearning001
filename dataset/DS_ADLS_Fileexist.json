@@ -1,0 +1,59 @@
+{
+	"name": "DS_ADLS_Fileexist",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AzureDataLakeStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "cases_deaths.parquet",
+				"folderPath": "ECDC/suresh12345/AzureDataEngineering_Batch/main/ecdc_data",
+				"fileSystem": "dlrawdata"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "country",
+				"type": "UTF8"
+			},
+			{
+				"name": "country_code",
+				"type": "UTF8"
+			},
+			{
+				"name": "continent",
+				"type": "UTF8"
+			},
+			{
+				"name": "population",
+				"type": "UTF8"
+			},
+			{
+				"name": "indicator",
+				"type": "UTF8"
+			},
+			{
+				"name": "daily_count",
+				"type": "UTF8"
+			},
+			{
+				"name": "date",
+				"type": "UTF8"
+			},
+			{
+				"name": "rate_14_day",
+				"type": "UTF8"
+			},
+			{
+				"name": "source",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

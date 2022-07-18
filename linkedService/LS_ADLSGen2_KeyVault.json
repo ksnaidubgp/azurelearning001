@@ -1,0 +1,19 @@
+{
+	"name": "LS_ADLSGen2_KeyVault",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://azlearningadls001.dfs.core.windows.net/",
+			"accountKey": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "LS_KeyVault001",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "DatalakeGen2-Key"
+			}
+		}
+	}
+}

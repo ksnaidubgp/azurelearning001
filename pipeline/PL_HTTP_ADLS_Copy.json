@@ -1,0 +1,160 @@
+{
+	"name": "PL_HTTP_ADLS_Copy",
+	"properties": {
+		"description": "Copy From Online Github repositery to ADLS Gen2 with the help of parameters.",
+		"activities": [
+			{
+				"name": "Validation of FIle existance",
+				"type": "Validation",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DS_ADLS_Fileexist",
+						"type": "DatasetReference"
+					},
+					"timeout": "0.00:01:00",
+					"sleep": 10
+				}
+			},
+			{
+				"name": "Conditinal Activity",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Validation of FIle existance",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@activity('Validation of FIle existance').output.exists",
+						"type": "Expression"
+					},
+					"ifTrueActivities": [
+						{
+							"name": "Copy data from HTTP to ADLS_copy",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "Delete If file already exist_copy",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 2,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "HttpReadSettings",
+										"requestMethod": "GET"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "ParquetWriteSettings"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_InputHTTPFIles",
+									"type": "DatasetReference",
+									"parameters": {
+										"baseURL": {
+											"value": "@pipeline().parameters.baseURL",
+											"type": "Expression"
+										},
+										"relativeURL": {
+											"value": "@pipeline().parameters.relativeURL",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_ECDCParuetFIles",
+									"type": "DatasetReference"
+								}
+							]
+						},
+						{
+							"name": "Delete If file already exist_copy",
+							"type": "Delete",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.00:01:00",
+								"retry": 2,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataset": {
+									"referenceName": "DS_ADLS_Fileexist",
+									"type": "DatasetReference"
+								},
+								"logStorageSettings": {
+									"linkedServiceName": {
+										"referenceName": "LS_AzureDataLakeStorage",
+										"type": "LinkedServiceReference"
+									},
+									"path": "dlrawdata"
+								},
+								"enableLogging": true,
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": false,
+									"enablePartitionDiscovery": false
+								}
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"baseURL": {
+				"type": "string",
+				"defaultValue": "https://raw.githubusercontent.com/"
+			},
+			"relativeURL": {
+				"type": "string",
+				"defaultValue": "suresh12345/AzureDataEngineering_Batch/main/ecdc_data/cases_deaths.csv"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-06-29T18:53:33Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

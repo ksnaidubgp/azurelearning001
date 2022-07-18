@@ -1,0 +1,13 @@
+{
+	"name": "LS_AzureDataLakeStorage",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "Azure Datalake Storage Linked Service",
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://azlearningadls001.dfs.core.windows.net/",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDZCQ0I3QTg4LTc3NEMtNDQ0NC1BN0UzLUE5NzEzRkFGMzI0MV83NjUwYjYxYy04Y2Q2LTRiNTEtOWM3OS0wYTc1MTQ5MWI1NjQiDQp9"
+		}
+	}
+}

@@ -1,0 +1,144 @@
+{
+	"name": "PL_Blob_Copy_ADLS_Wildcards_Hierarchy",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data Using WIldcard Pattern From Blob to ADLS",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"additionalColumns": [
+							{
+								"name": "Source_File",
+								"value": "$$FILEPATH"
+							},
+							{
+								"name": "Processing_Date",
+								"value": {
+									"value": "@formatDateTime(addDays(utcnow(),-1))",
+									"type": "Expression"
+								}
+							}
+						],
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"wildcardFolderPath": "*",
+							"wildcardFileName": "Cust*.txt",
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings",
+							"copyBehavior": "MergeFiles"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".csv"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "cust_id",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "cust_id",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "cust_name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "cust_name",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "cust_num",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "cust_num",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Source_File",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Source_File",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Processing_Date",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Processing_Date",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Customer_Wildcard",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Target_CSVData",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2022-06-10T16:45:35Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,23 @@
+{
+	"name": "DS_Blob_Fileexist",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Blobstorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Customer.txt",
+				"container": "rawdata"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

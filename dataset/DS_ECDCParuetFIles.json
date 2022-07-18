@@ -1,0 +1,21 @@
+{
+	"name": "DS_ECDCParuetFIles",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AzureDataLakeStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "ECDC",
+				"fileSystem": "dlrawdata"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

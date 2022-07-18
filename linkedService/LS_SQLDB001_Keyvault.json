@@ -1,0 +1,19 @@
+{
+	"name": "LS_SQLDB001_Keyvault",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "azuresqldb001 Database connection",
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "LS_KeyVault001",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "azuresqldb001-ConnectionString"
+			}
+		}
+	}
+}
