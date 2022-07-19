@@ -1,0 +1,27 @@
+{
+	"name": "DS_SQLDB_Tables",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SQLDB001_Keyvault",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"InputFile": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "dbo",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@replace(dataset().InputFile,'.csv','')",
+				"type": "Expression"
+			}
+		}
+	}
+}
