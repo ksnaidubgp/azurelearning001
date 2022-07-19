@@ -33,7 +33,7 @@
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "ForEach for files",
 				"type": "ForEach",
 				"dependsOn": [
 					{
@@ -45,9 +45,14 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata File').output.childItems",
+						"type": "Expression"
+					},
+					"batchCount": 5,
 					"activities": [
 						{
-							"name": "Copy data1",
+							"name": "Copy data for each time",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -59,8 +64,31 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobFSReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
 								"enableStaging": false
-							}
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_Adls_Input",
+									"type": "DatasetReference",
+									"parameters": {
+										"InputFile": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
+								}
+							]
 						}
 					]
 				}

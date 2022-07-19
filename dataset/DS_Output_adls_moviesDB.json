@@ -15,10 +15,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": {
-					"value": "@dataset().InputFile",
-					"type": "Expression"
-				},
 				"folderPath": "Output",
 				"fileSystem": "dataflows"
 			},
