@@ -5,11 +5,6 @@
 			"referenceName": "LS_ADLSGen2_KeyVault",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"InputFile": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
