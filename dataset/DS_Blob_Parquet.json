@@ -16,7 +16,7 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": {
-					"value": "concat(replace(dataset().OutFile,'.csv',''),'.parquet')",
+					"value": "@concat(replace(dataset().OutFile,'.csv',''),'.parquet')",
 					"type": "Expression"
 				},
 				"folderPath": "Movies_Data",
