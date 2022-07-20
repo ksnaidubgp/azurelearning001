@@ -1,0 +1,91 @@
+{
+	"name": "Movie_Data_Transformation",
+	"properties": {
+		"description": "Movies Data transformation Techniques",
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_adls_moviesDB",
+						"type": "DatasetReference"
+					},
+					"name": "Moviessource"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_Output_adls_moviesDB",
+						"type": "DatasetReference"
+					},
+					"name": "Before1950Agg"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Output_adls_moviesDB",
+						"type": "DatasetReference"
+					},
+					"name": "After1950Agg"
+				}
+			],
+			"transformations": [
+				{
+					"name": "filterData"
+				},
+				{
+					"name": "splitData"
+				},
+				{
+					"name": "aggregateBefore1950"
+				},
+				{
+					"name": "aggregateAfter1950"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          movie as string,",
+				"          title as string,",
+				"          genres as string,",
+				"          year as integer,",
+				"          Rating as integer,",
+				"          {Rotton Tomato} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: true,",
+				"     moveFiles: ['/Input','archive'],",
+				"     rowUrlColumn: 'File_Name',",
+				"     multiLineRow: true) ~> Moviessource",
+				"Moviessource filter(year>=1910 && year <=2000) ~> filterData",
+				"filterData split(year<=1950,",
+				"     disjoint: false) ~> splitData@(Before1950, After1950)",
+				"splitData@Before1950 aggregate(groupBy(year,",
+				"          genres),",
+				"     Avg_Rating = avg(Rating)) ~> aggregateBefore1950",
+				"splitData@After1950 aggregate(groupBy(year,",
+				"          genres),",
+				"     Avg_rating = avg(Rating)) ~> aggregateAfter1950",
+				"aggregateBefore1950 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['movies_Before1950.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> Before1950Agg",
+				"aggregateAfter1950 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['movies_After1950.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> After1950Agg"
+			]
+		}
+	}
+}

@@ -1,0 +1,12 @@
+{
+	"name": "DS_SQLDB_Lookup",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SQLDB001_Keyvault",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}
