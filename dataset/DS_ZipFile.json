@@ -14,7 +14,8 @@
 				"container": "rawdata"
 			},
 			"compression": {
-				"type": "ZipDeflate"
+				"type": "ZipDeflate",
+				"level": "Optimal"
 			}
 		}
 	}
