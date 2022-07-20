@@ -41,6 +41,7 @@
 						}
 					},
 					"enableStaging": false,
+					"enableSkipIncompatibleRow": true,
 					"dataIntegrationUnits": 2,
 					"translator": {
 						"type": "TabularTranslator",
