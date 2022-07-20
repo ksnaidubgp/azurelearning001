@@ -1,0 +1,21 @@
+{
+	"name": "DS_ZipFile",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_BlobStroage_Keyvault",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "MoviesBD.zip",
+				"container": "rawdata"
+			},
+			"compression": {
+				"type": "ZipDeflate"
+			}
+		}
+	}
+}
